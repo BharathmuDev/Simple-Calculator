@@ -1,8 +1,56 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    margin-left: 120px;
+}
+
+.icon {
+   margin-left: 410px;
+    margin-bottom: 70px;
+}
+.display {
+    position: relative;
+    width: 550px;
+    height: 150px;
+}
+
+.content {
+    font-weight: bolder;
+    font-size: 50px;
+    color: #675d5d;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 100px;
+}
+
+input {
+    border: none;
+    height: 100px;
+    width: 460px;
+    background-color: #675d5d;
+    border-radius: 20px;
+    margin-top: 50px;
+    color: antiquewhite;
+    font-weight: lighter;
+    font-size: 50px;
+}
+
+.output {
+    position: absolute;
+    right: 0;
+}
+
 .keys {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-row-gap: 10px;
-
+    width: 500px;
+    margin-top: -75px;
 }
 .key{
     background-color: #544f4f;
@@ -15,4 +63,18 @@
     justify-content: center;
     font-size: larger;
     font-weight: bolder;
+}
+
+.keys .key:first-child {
+    background-color: #8c3da4;
+}
+.keys .key:nth-child(2),
+.keys .key:nth-child(3),
+.keys .key:nth-child(4),
+.keys .key:nth-child(4),
+.keys .key:nth-child(8),
+.keys .key:nth-child(12),
+.keys .key:nth-child(16),
+.keys .key:nth-child(20) {
+    background-color: #379a9b;
 }
