@@ -2,79 +2,100 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.app {
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 h1 {
-    margin-left: 120px;
+    margin: 0 0 30px;
+    font-size: 36px;
+    color: dodgerblue;
+    text-transform: uppercase;
+}
+
+.calculator {
+    width: 550px;
+    text-align: left;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .icon {
-   margin-left: 410px;
-    margin-bottom: 70px;
+    align-self: flex-end;
+    margin-bottom: 20px;
 }
+
 .display {
-    position: relative;
-    width: 550px;
-    height: 150px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
-.content {
-    font-weight: bolder;
-    font-size: 50px;
-    color: #675d5d;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 100px;
-}
-
-input {
+input[type="text"] {
     border: none;
-    height: 100px;
-    width: 460px;
+    height: 80px;
+    width: calc(100% - 20px);
     background-color: #675d5d;
-    border-radius: 20px;
-    margin-top: 50px;
+    border-radius: 10px;
+    margin-top: 10px;
     color: antiquewhite;
     font-weight: lighter;
-    font-size: 50px;
-}
-
-.output {
-    position: absolute;
-    right: 0;
+    font-size: 36px;
+    text-align: right;
+    padding: 0 10px;
 }
 
 .keys {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-row-gap: 10px;
-    width: 500px;
-    margin-top: -75px;
+    grid-gap: 10px;
+    margin-top: 10px;
 }
-.key{
+
+.key {
     background-color: #544f4f;
     color: white;
-    height: 50px;
-    width: 60px;
-    border-radius: 50px;
+    height: 80px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: larger;
+    font-size: 28px;
     font-weight: bolder;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.keys .key:first-child {
+.key:hover {
     background-color: #8c3da4;
 }
+
 .keys .key:nth-child(2),
 .keys .key:nth-child(3),
-.keys .key:nth-child(4),
 .keys .key:nth-child(4),
 .keys .key:nth-child(8),
 .keys .key:nth-child(12),
 .keys .key:nth-child(16),
 .keys .key:nth-child(20) {
     background-color: #379a9b;
+}
+
+.key[data-key="equals"] {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.key[data-key="equals"]:hover {
+    background-color: #187bcd;
 }
