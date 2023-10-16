@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
                 case '=':
                     try {
-                        const result = eval(inputElement.textContent);
+                        const expression = inputElement.textContent.replace(/%/g, '/100*');
+                        const result = eval(expression);
+                        console.log(result);
                         outputElement.textContent = result;
                     } catch (error) {
                         outputElement.textContent = 'Error';
