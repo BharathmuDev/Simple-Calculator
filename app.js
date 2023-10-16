@@ -4,6 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const keys = document.querySelectorAll('.key');
     let isOpenBracket = true;
     let currentOperator = null;
+    function evaluateExpression(expression) {
+        expression = expression.replace(/%/g, '/100*');
+
+        const regex = /\(([^()]*)\)/;
+        let match = regex.exec(expression);
+
+        while (match) {
+            const subExpression = match[1];
+            const subResult = eval(subExpression);
+            expression = expression.replace(`(${subExpression})`, '*' + subResult);
+            match = regex.exec(expression);
+        }
+        return eval(expression);
+    }
 
     keys.forEach(key => {
         key.addEventListener('click', function() {
@@ -16,8 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
                 case '=':
                     try {
-                        const expression = inputElement.textContent.replace(/%/g, '/100*');
-                        const result = eval(expression);
+                        const result = evaluateExpression(inputElement.textContent);
                         console.log(result);
                         outputElement.textContent = result;
                     } catch (error) {
@@ -41,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 case '-':
                 case '*':
                 case '/':
+                case '%':
                     if (currentOperator && currentOperator !== keyValue) {
                         let currentInput = inputElement.textContent;
                         inputElement.textContent = currentInput.slice(0, -1) + keyValue;
