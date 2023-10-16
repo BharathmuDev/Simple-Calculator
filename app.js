@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     isOpenBracket = !isOpenBracket;
                     break;
+                case 'x':
+                    let currentInput = inputElement.textContent;
+                    inputElement.textContent = currentInput.slice(0, -1);
+                    break;
                 default:
                     inputElement.textContent += keyValue;
                     break;
@@ -39,3 +43,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
