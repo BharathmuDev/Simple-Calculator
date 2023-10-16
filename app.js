@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     break;
                 case '( )':
-                    // Toggle between open and close brackets
                     if (isOpenBracket) {
                         inputElement.textContent += '(';
                     } else {
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     isOpenBracket = !isOpenBracket;
                     break;
                 case 'x':
-                    let currentInput = inputElement.textContent;
+                    const currentInput = inputElement.textContent;
                     inputElement.textContent = currentInput.slice(0, -1);
                     break;
                 case '+':
@@ -55,13 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 case '*':
                 case '/':
                 case '%':
-                    if (currentOperator && currentOperator !== keyValue) {
-                        let currentInput = inputElement.textContent;
-                        inputElement.textContent = currentInput.slice(0, -1) + keyValue;
+                    let currentInput1 = inputElement.textContent;
+                    const lastChar = currentInput1.slice(-1);
+                    if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/' || lastChar === '%') {
+                        inputElement.textContent = currentInput1.slice(0, -1) + keyValue;
                     } else {
                         inputElement.textContent += keyValue;
                     }
-                    currentOperator = keyValue;
                     break;
                 default:
                     inputElement.textContent += keyValue;
