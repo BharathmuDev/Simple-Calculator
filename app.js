@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const outputElement = document.querySelector('.output');
     const keys = document.querySelectorAll('.key');
     let isOpenBracket = true;
+    let currentOperator = null;
 
     keys.forEach(key => {
         key.addEventListener('click', function() {
@@ -35,6 +36,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 case 'x':
                     let currentInput = inputElement.textContent;
                     inputElement.textContent = currentInput.slice(0, -1);
+                    break;
+                case '+':
+                case '-':
+                case '*':
+                case '/':
+                    if (currentOperator && currentOperator !== keyValue) {
+                        let currentInput = inputElement.textContent;
+                        inputElement.textContent = currentInput.slice(0, -1) + keyValue;
+                    } else {
+                        inputElement.textContent += keyValue;
+                    }
+                    currentOperator = keyValue;
                     break;
                 default:
                     inputElement.textContent += keyValue;
