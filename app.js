@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else {
                         inputElement.textContent += ')';
                     }
-                    isOpenBracket = !isOpenBracket; // Toggle isOpenBracket variable
+                    isOpenBracket = !isOpenBracket;
                     break;
                 default:
                     inputElement.textContent += keyValue;
