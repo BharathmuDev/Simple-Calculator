@@ -10,7 +10,13 @@
     <div class="app">
         <div class="calculator">
             <div class="icon">
-                <p style="font-size: 22px; color: dimgrey; "><i class="fa-sharp fa-solid fa-bars fa-xl"></i></p>
+                <p style="font-size: 22px; color: dimgrey; cursor: pointer;"><i class="fa-sharp fa-solid fa-bars fa-xl"></i></p>
+                <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <button id="showHistory">Show History</button>
+                        <button id="clearHistory">Clear History</button>
+                    </div>
+                </div>
             </div>
             <div class="display">
                 <div class="content">
@@ -62,7 +68,6 @@
                     <span>1</span>
                 </div>
                 <div data-key="two" class="key">
-
                     <span>2</span>
                 </div>
                 <div data-key="three" class="key">
@@ -86,7 +91,6 @@
             </div>
         </div>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
