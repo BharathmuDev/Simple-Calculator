@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('modal');
     const showHistoryBtn = document.getElementById('showHistory');
     const clearHistoryBtn = document.getElementById('clearHistory');
+    const historyPopup = document.querySelector('.history-popup');
+    const historyContent = document.querySelector('.history-content');
+    const closeHistoryBtn = document.querySelector('.close-history');
     let isOpenBracket = true;
     let history = [];
 
@@ -37,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
         history.forEach(item => {
             historyContent += `${item.operation} = ${item.result}\n`;
         });
-        alert(historyContent);
     }
     showHistoryBtn.addEventListener('click', showHistory);
     clearHistoryBtn.addEventListener('click', clearHistory);
@@ -45,6 +47,25 @@ document.addEventListener('DOMContentLoaded', function() {
         clearHistory();
         toggleModal();
     });
+
+
+    function updateHistoryPopup() {
+        historyContent.innerHTML = '';
+
+        history.forEach(item => {
+            const historyItem = document.createElement('div');
+            historyItem.textContent = `${item.operation} = ${item.result}`;
+            historyContent.appendChild(historyItem);
+        });
+
+        historyPopup.style.display = 'flex';
+    }
+
+    showHistoryBtn.addEventListener('click', updateHistoryPopup);
+    closeHistoryBtn.addEventListener('click', function() {
+        historyPopup.style.display = 'none'; // Close the history popup
+    });
+
 
     keys.forEach(key => {
         key.addEventListener('click', function() {
