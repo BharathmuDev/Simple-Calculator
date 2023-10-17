@@ -114,10 +114,13 @@ input[type="text"] {
     transition: background-color 0.3s ease;
 }
 
-.key:hover {
+.keys .key:nth-child(1) {
     background-color: #8c3da4;
 }
 
+.key:hover {
+    background-color: #8c3da4;
+}
 .keys .key:nth-child(2),
 .keys .key:nth-child(3),
 .keys .key:nth-child(4),
