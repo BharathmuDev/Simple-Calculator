@@ -24,9 +24,27 @@ document.addEventListener('DOMContentLoaded', function() {
         return eval(expression);
     }
 
+    function toggleModal() {
+        modal.style.display = (modal.style.display === 'none' || modal.style.display === '') ? 'flex' : 'none';
+    }
+    icon.addEventListener('click', toggleModal);
+
     function clearHistory() {
         history = [];
     }
+    function showHistory() {
+        let historyContent = '';
+        history.forEach(item => {
+            historyContent += `${item.operation} = ${item.result}\n`;
+        });
+        alert(historyContent);
+    }
+    showHistoryBtn.addEventListener('click', showHistory);
+    clearHistoryBtn.addEventListener('click', clearHistory);
+    clearHistoryBtn.addEventListener('click', function() {
+        clearHistory();
+        toggleModal();
+    });
 
     keys.forEach(key => {
         key.addEventListener('click', function() {
@@ -79,17 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    function showHistory() {
-        let historyContent = '';
-        history.forEach(item => {
-            historyContent += `${item.operation} = ${item.result}\n`;
-        });
-        alert(historyContent);
-    }
-
-    showHistoryBtn.addEventListener('click', showHistory);
-    clearHistoryBtn.addEventListener('click', clearHistory);
 });
 
 
