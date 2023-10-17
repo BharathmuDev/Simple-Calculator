@@ -2,8 +2,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputElement = document.querySelector('.input');
     const outputElement = document.querySelector('.output');
     const keys = document.querySelectorAll('.key');
+    const icon = document.querySelector('.icon');
+    const modal = document.getElementById('modal');
+    const showHistoryBtn = document.getElementById('showHistory');
+    const clearHistoryBtn = document.getElementById('clearHistory');
     let isOpenBracket = true;
-    let currentOperator = null;
+    let history = [];
+
     function evaluateExpression(expression) {
         expression = expression.replace(/%/g, '/100*');
 
@@ -19,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
         return eval(expression);
     }
 
+    function clearHistory() {
+        history = [];
+    }
+
     keys.forEach(key => {
         key.addEventListener('click', function() {
             const keyValue = this.innerText;
@@ -30,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
                 case '=':
                     try {
-                        const result = evaluateExpression(inputElement.textContent);
+                        const expression = inputElement.textContent;
+                        const result = evaluateExpression(expression);
+                        history.push({ operation: expression, result: result });
                         console.log(result);
                         outputElement.textContent = result;
                     } catch (error) {
@@ -68,5 +79,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    function showHistory() {
+        let historyContent = '';
+        history.forEach(item => {
+            historyContent += `${item.operation} = ${item.result}\n`;
+        });
+        alert(historyContent);
+    }
+
+    showHistoryBtn.addEventListener('click', showHistory);
+    clearHistoryBtn.addEventListener('click', clearHistory);
 });
+
 
