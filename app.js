@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let history = [];
 
     function evaluateExpression(expression) {
-        expression = expression.replace(/%/g, '/100*');
-
         const regex = /\(([^()]*)\)/;
         let match = regex.exec(expression);
 
@@ -24,8 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
             expression = expression.replace(`(${subExpression})`, '*' + subResult);
             match = regex.exec(expression);
         }
+        expression = expression.replace(/%/g, '/100');
         return eval(expression);
     }
+
 
     function toggleModal() {
         modal.style.display = (modal.style.display === 'none' || modal.style.display === '') ? 'flex' : 'none';
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     showHistoryBtn.addEventListener('click', updateHistoryPopup);
     closeHistoryBtn.addEventListener('click', function() {
-        historyPopup.style.display = 'none'; // Close the history popup
+        historyPopup.style.display = 'none';
     });
 
     keys.forEach(key => {
