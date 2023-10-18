@@ -2,76 +2,114 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputElement = document.querySelector('.input');
     const outputElement = document.querySelector('.output');
     const keys = document.querySelectorAll('.key');
+    const icon = document.querySelector('.icon');
     const modal = document.getElementById('modal');
-    const history = [];
+    const showHistoryBtn = document.getElementById('showHistory');
+    const clearHistoryBtn = document.getElementById('clearHistory');
+    const historyPopup = document.querySelector('.history-popup');
+    const historyContent = document.querySelector('.history-content');
+    const closeHistoryBtn = document.querySelector('.close-history');
+    let isOpenBracket = true;
+    let history = [];
 
     function evaluateExpression(expression) {
         expression = expression.replace(/%/g, '/100*');
-        try {
-            return eval(expression);
-        } catch (error) {
-            return 'Error';
+
+        const regex = /\(([^()]*)\)/;
+        let match = regex.exec(expression);
+
+        while (match) {
+            const subExpression = match[1];
+            const subResult = eval(subExpression);
+            expression = expression.replace(`(${subExpression})`, '*' + subResult);
+            match = regex.exec(expression);
         }
-    }
-
-    function updateInput(value) {
-        inputElement.textContent += value;
-    }
-
-    function clearInput() {
-        inputElement.textContent = '';
-        outputElement.textContent = '';
+        return eval(expression);
     }
 
     function toggleModal() {
-        modal.style.display = modal.style.display === 'none' || modal.style.display === '' ? 'flex' : 'none';
+        modal.style.display = (modal.style.display === 'none' || modal.style.display === '') ? 'flex' : 'none';
     }
+    icon.addEventListener('click', toggleModal);
 
-    function addToHistory(operation, result) {
-        history.push({ operation, result });
+    function clearHistory() {
+        history = [];
     }
-
     function showHistory() {
         let historyContent = '';
         history.forEach(item => {
             historyContent += `${item.operation} = ${item.result}\n`;
         });
-        console.log(historyContent);
-
     }
+    showHistoryBtn.addEventListener('click', showHistory);
+    clearHistoryBtn.addEventListener('click', clearHistory);
+    clearHistoryBtn.addEventListener('click', function() {
+        clearHistory();
+        toggleModal();
+    });
+
+    function updateHistoryPopup() {
+        historyContent.innerHTML = '';
+
+        history.forEach(item => {
+            const historyItem = document.createElement('div');
+            historyItem.textContent = `${item.operation} = ${item.result}`;
+            historyContent.appendChild(historyItem);
+        });
+        historyPopup.style.display = 'flex';
+    }
+
+    showHistoryBtn.addEventListener('click', updateHistoryPopup);
+    closeHistoryBtn.addEventListener('click', function() {
+        historyPopup.style.display = 'none'; // Close the history popup
+    });
 
     keys.forEach(key => {
         key.addEventListener('click', function() {
             const keyValue = this.innerText;
             switch (keyValue) {
                 case 'AC':
-                    clearInput();
+                    inputElement.textContent = '';
+                    outputElement.textContent = '';
                     break;
                 case '=':
-                    const expression = inputElement.textContent;
-                    const result = evaluateExpression(expression);
-                    outputElement.textContent = result;
-                    addToHistory(expression, result);
+                    try {
+                        const expression = inputElement.textContent;
+                        const result = evaluateExpression(expression);
+                        history.push({ operation: expression, result: result });
+                        console.log(result);
+                        outputElement.textContent = result;
+                    } catch (error) {
+                        outputElement.textContent = 'Error';
+                    }
                     break;
                 case '( )':
-                    updateInput(isOpenBracket ? '(' : ')');
+                    if (isOpenBracket) {
+                        inputElement.textContent += '(';
+                    } else {
+                        inputElement.textContent += ')';
+                    }
                     isOpenBracket = !isOpenBracket;
                     break;
                 case 'x':
-                    inputElement.textContent = inputElement.textContent.slice(0, -1);
+                    const currentInput = inputElement.textContent;
+                    inputElement.textContent = currentInput.slice(0, -1);
                     break;
                 case '+':
                 case '-':
                 case '*':
                 case '/':
                 case '%':
-                    const lastChar = inputElement.textContent.slice(-1);
-                    if (!['+', '-', '*', '/', '%'].includes(lastChar)) {
-                        updateInput(keyValue);
+                    let currentInput1 = inputElement.textContent;
+                    const lastChar = currentInput1.slice(-1);
+                    if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/' || lastChar === '%') {
+                        inputElement.textContent = currentInput1.slice(0, -1) + keyValue;
+                    } else {
+                        inputElement.textContent += keyValue;
                     }
                     break;
                 default:
-                    updateInput(keyValue);
+                    inputElement.textContent += keyValue;
                     break;
             }
         });
