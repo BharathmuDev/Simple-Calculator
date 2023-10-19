@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return eval(expression);
     }
 
-
     function toggleModal() {
         modal.style.display = (modal.style.display === 'none' || modal.style.display === '') ? 'flex' : 'none';
     }
@@ -100,13 +99,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 case '*':
                 case '/':
                 case '%':
-                    let currentInput1 = inputElement.textContent;
-                    const lastChar = currentInput1.slice(-1);
-                    if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/' || lastChar === '%') {
-                        inputElement.textContent = currentInput1.slice(0, -1) + keyValue;
-                    } else {
-                        inputElement.textContent += keyValue;
+                    const lastChar = inputElement.textContent.slice(-1);
+                    if (['+', '-', '*', '/', '%'].includes(lastChar)) {
+                        inputElement.textContent = inputElement.textContent.slice(0, -1);
                     }
+                    inputElement.textContent += keyValue;
                     break;
                 default:
                     inputElement.textContent += keyValue;
