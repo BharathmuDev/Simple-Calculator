@@ -83,11 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     break;
                 case '( )':
-                    if (isOpenBracket) {
-                        inputElement.textContent += '(';
-                    } else {
-                        inputElement.textContent += ')';
-                    }
+                    inputElement.textContent += isOpenBracket ? '(' : ')';
                     isOpenBracket = !isOpenBracket;
                     break;
                 case 'x':
